@@ -34,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
     change the variable "expression" and add the right sign
     */
     public void add(View view) {
-        if (!(display.getText().toString().equals("ileagel expression") || display.getText().toString().equals("")))
+        if (!display.getText().toString().equals(""))
         {
             //get the text in the edit text and add to it '+'
-            expression = display.getText().toString();
+            expression += display.getText().toString();
             expression += '+';
 
             //put the new text in the edit test
-            display.setText(expression);
+            display.setText("");
 
             //put the cursor in the end of the string
             display.setSelection(display.getText().length());
@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
     change the variable "expression" and add the right sign
     */
     public void sub(View view) {
-        if (!(display.getText().toString().equals("ileagel expression") || display.getText().toString().equals("")))
+        if (!display.getText().toString().equals(""))
         {
             //get the text in the edit text and add to it '-'
-            expression = display.getText().toString();
+            expression += display.getText().toString();
             expression += '-';
 
             //put the new text in the edit test
-            display.setText(expression);
+            display.setText("");
 
             //put the cursor in the end of the string
             display.setSelection(display.getText().length());
@@ -78,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
    change the variable "expression" and add the right sign
    */
     public void multiply(View view) {
-        if (!(display.getText().toString().equals("ileagel expression") || display.getText().toString().equals("")))
+        if (!display.getText().toString().equals(""))
         {
             //get the text in the edit text and add to it '*'
-            expression = display.getText().toString();
+            expression += display.getText().toString();
             expression += '*';
 
             //put the new text in the edit test
-            display.setText(expression);
+            display.setText("");
 
             //put the cursor in the end of the string
             display.setSelection(display.getText().length());
@@ -100,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
    change the variable "expression" and add the right sign
    */
     public void divide(View view) {
-        if (!(display.getText().toString().equals("ileagel expression") || display.getText().toString().equals("")))
+        if (!display.getText().toString().equals(""))
         {
             //get the text in the edit text and add to it '/'
-            expression = display.getText().toString();
+            expression += display.getText().toString();
             expression += '/';
 
             //put the new text in the edit test
-            display.setText(expression);
+            display.setText("");
 
             //put the cursor in the end of the string
             display.setSelection(display.getText().length());
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         //reset the content of the edit text
         display.setText("");
+        display.setHint("");
     }
 
     /*
@@ -137,39 +138,49 @@ public class MainActivity extends AppCompatActivity {
     this function the the value of the expression and put it in the edit text
     */
     public void getSummery(View view) {
-        // start it with the deafult sign
-        char sign = '+';
+        if (!display.getText().toString().equals(""))
+        {
+            // start it with the deafult sign
+            char sign = '+';
 
-        //in order to get the summery I need these variables
-        String number = "";
-        float summery = 0;
+            //in order to get the summery I need these variables
+            String number = "";
+            float summery = 0;
 
-        // update the expression data and the condition of the expression
-        expression = display.getText().toString();
-        isLegal = true;
+            // update the expression data and the condition of the expression
+            expression += display.getText().toString();
+            isLegal = true;
 
-        // scan the string and get the summery
-        for (int i = 0; i < expression.length(); i++) {
-            if (expression.charAt(i) >= '0' && expression.charAt(i) <= '9') {
-                number += expression.charAt(i);
+            // scan the string and get the summery
+            for (int i = 0; i < expression.length(); i++) {
+                if (expression.charAt(i) >= '0' && expression.charAt(i) <= '9') {
+                    number += expression.charAt(i);
+                }
+                else {
+                    summery = calculate(summery, sign, number);
+                    number = "";
+                    sign = expression.charAt(i);
+                }
+            }
+            summery = calculate(summery, sign, number);
+
+            if (isLegal) {
+                if((((float)((int)summery)) == (float)summery))
+                {
+                    display.setText(String.valueOf((int)summery));
+                }
+                else
+                {
+                    display.setText(String.valueOf(summery));
+                }
+                summeryFlag = true;
+                lastSummery = summery;
             }
             else {
-                summery = calculate(summery, sign, number);
-                number = "";
-                sign = expression.charAt(i);
+                display.setHint("ileagel expression");
             }
+            expression = "";
         }
-        summery = calculate(summery, sign, number);
-
-        if (isLegal) {
-            display.setText(String.valueOf(summery));
-            summeryFlag = true;
-            lastSummery = summery;
-        }
-        else {
-            display.setText("ileagel expression");
-        }
-
     }
 
     /*

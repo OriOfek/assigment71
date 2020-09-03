@@ -78,7 +78,7 @@
             <Button
                 android:layout_width="0px"
                 android:onClick="sub"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="-" />
 
@@ -90,7 +90,7 @@
             <Button
                 android:layout_width="0px"
                 android:onClick="multiply"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="*" />
 
